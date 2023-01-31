@@ -68,7 +68,7 @@ function Login() {
         />
         <button
           type="submit"
-          className="w-full bg-[#885522] my-4 py-1 text-white tracking-[1.5px] max-w-[250px]"
+          className="w-full block bg-[#885522] my-4 py-1 text-white tracking-[1.5px]"
         >
           Login
         </button>
