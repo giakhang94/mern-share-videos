@@ -25,7 +25,7 @@ function AddPost() {
     "Kinh Tạng",
   ];
   //const baseURL
-  const baseURL = "http://localhost:5000";
+  const baseURL = "https://mern-share-videos.onrender.com";
 
   //get thumnails
   useEffect(() => {
