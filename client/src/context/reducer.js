@@ -8,6 +8,7 @@ import {
   CLEAR_ALERT,
   DISPLAY_ALERT,
   GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_ERROR,
   GET_CURRENT_USER_SUCCESS,
   HANDLE_CHANGE,
   HIDE_SIDEBAR,
@@ -64,6 +65,12 @@ function reducer(state, action) {
     return {
       ...state,
       isLoading: true,
+    };
+  }
+  if (action.type === GET_CURRENT_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
     };
   }
   if (action.type === GET_CURRENT_USER_SUCCESS) {

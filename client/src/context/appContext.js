@@ -10,6 +10,7 @@ import {
   CLEAR_ALERT,
   DISPLAY_ALERT,
   GET_CURRENT_USER_BEGIN,
+  GET_CURRENT_USER_ERROR,
   GET_CURRENT_USER_SUCCESS,
   HANDLE_CHANGE,
   HIDE_SIDEBAR,
@@ -155,6 +156,7 @@ const AppContextProvier = ({ children }) => {
       const { data } = await authFetch.get("/user/getCurrentUser");
       dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: data.user });
     } catch (error) {
+      dispatch({ type: GET_CURRENT_USER_ERROR });
       return <Navigate to="/login" />;
     }
   };
@@ -315,7 +317,7 @@ const AppContextProvier = ({ children }) => {
   //get all videos for filter
   const getAllVideo = async (tag, category, page) => {
     dispatch({ type: VIDEO_HOME_GET_ALL_BEGIN });
-    let url = `/video/all?category=${category}&page=${page}`;
+    let url = `/video/all?category=${category}&page=${page ? page : ""}`;
     if (tag) {
       url = url + `&tag=${tag}`;
     }
@@ -334,7 +336,7 @@ const AppContextProvier = ({ children }) => {
   //get all videos for filter in home page
   const getAllVideoHome = async (tag, category, page) => {
     dispatch({ type: VIDEO_GET_ALL_BEGIN });
-    let url = `/video/all-home?category=${category}&page=${page}`;
+    let url = `/video/all-home?category=${category}&page=${page ? page : ""}`;
     if (tag) {
       url = url + `&tag=${tag}`;
     }

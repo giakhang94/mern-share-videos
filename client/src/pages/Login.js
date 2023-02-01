@@ -1,4 +1,4 @@
-import { Alert, FormRow, Logo } from "../components";
+import { Alert, FormRow, Loading, Logo, SmallLoading } from "../components";
 import { useAppContext } from "../context/appContext";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/android-chrome-512x512.png";
@@ -15,6 +15,7 @@ function Login() {
     showAlert,
     alertText,
     alertType,
+    isLoading,
   } = useAppContext();
   const handleChangeInput = (e) => {
     handleChange({ [e.target.name]: e.target.value });
@@ -68,9 +69,10 @@ function Login() {
         />
         <button
           type="submit"
+          disabled={isLoading}
           className="w-full block bg-[#885522] my-4 py-1 text-white tracking-[1.5px]"
         >
-          Login
+          <span>{isLoading ? <SmallLoading /> : "Login"}</span>
         </button>
       </form>
     </div>

@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Alert, FormRow, Loading, SideBar } from "../../components";
+import {
+  Alert,
+  FormRow,
+  Loading,
+  SideBar,
+  SmallLoading,
+} from "../../components";
 import { useAppContext } from "../../context/appContext";
 
 function Profile() {
@@ -26,9 +32,6 @@ function Profile() {
     );
   };
 
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <div className="profile flex mb-0 Plaptop:w-[500px] laptop:w-[500px] Ptablet:w-[500px] tablet:w-[400px] Pmobile:w-[350px] mobile:w-[280px] w-[250px]">
       {/* <div className="sidbar w-[300px] bg-blue-100 -mt-10">
@@ -75,7 +78,7 @@ function Profile() {
                 className="w-full bg-green-400 text-white font-semibold tracking-[1.5px] mt-2 py-1 rounded-sm"
                 onClick={handleSaveChange}
               >
-                Save Changes
+                {isLoading ? <SmallLoading /> : "Save Changes"}
               </button>
             ) : (
               <button
@@ -84,7 +87,7 @@ function Profile() {
                   setIsEdit((prev) => !prev);
                 }}
               >
-                Edit
+                {isLoading ? <SmallLoading /> : "Edit"}
               </button>
             )}
           </div>
