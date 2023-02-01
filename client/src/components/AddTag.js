@@ -22,7 +22,7 @@ export default function AddTag({ data }) {
     e.preventDefault();
     console.log("savetag");
     saveTag(listTag);
-    hideModal();
+    displayAlert("succes", "nhấn Save để lưu tất cả");
   };
   return (
     <>
@@ -30,7 +30,7 @@ export default function AddTag({ data }) {
         <input
           ref={tagRef}
           name="tag"
-          placeholder="Type tag here and enter..."
+          placeholder="enter to add, press done to save"
           type="text"
           className="p-1 block w-full outline-none"
           value={input}
@@ -63,13 +63,11 @@ export default function AddTag({ data }) {
           className="text-green-500 bg-green-200 text-md p-[1px] w-[100px] cursor-pointer"
           onClick={handleSaveTag}
         >
-          Sửa xong
+          Done
         </button>
       </form>
       <div className="tag-container flex space-x-3 flex-wrap mt-3">
-        {showAlert && !isDoneCreateVideo && (
-          <Alert alertText={alertText} alertType={alertType} />
-        )}
+        {showAlert && <Alert alertText={alertText} alertType={alertType} />}
         {listTag &&
           listTag.length > 0 &&
           listTag.map((tag, index) => {

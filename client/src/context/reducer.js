@@ -348,7 +348,7 @@ function reducer(state, action) {
   if (action.type === SHOW_TAGS_MODAL) {
     return {
       ...state,
-      isEditTag: true,
+      // isEditTag: true,
       tagList: action.payload.tags,
     };
   }
