@@ -11,19 +11,21 @@ const Search = ({ showResultCount }) => {
     getAllVideo,
   } = useAppContext();
 
-  const searchValue = { tag: tagSearch, category: categorySearch };
+  // const searchValue = { tag: "", category: "all"
+  const [searchValue, setSearch] = useState({ tag: "", category: "all" });
   const handleChangeInput = (e) => {
-    setSearchValue({ ...searchValue, [e.target.name]: e.target.value });
+    setSearch((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  // setSearchValue({ ...searchValue });
   useEffect(() => {
     const delayHandler = setTimeout(() => {
-      getAllVideo(tagSearch, categorySearch);
+      getAllVideo(searchValue.tag, searchValue.category);
       showResultCount(tagSearch);
     }, 800);
     return () => {
       clearTimeout(delayHandler);
     };
-  }, [tagSearch, categorySearch]);
+  }, [searchValue.tag, searchValue.category]);
   return (
     <div className="search w-full mb-5 p-3">
       <form
@@ -56,7 +58,7 @@ const Search = ({ showResultCount }) => {
             placeholder="Tìm video theo tag..."
             type="text"
             onChange={handleChangeInput}
-            value={tagSearch}
+            value={searchValue.tag}
           />
         </div>
         {/* <button>SEARCH</button> */}

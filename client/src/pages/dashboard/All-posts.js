@@ -45,12 +45,12 @@ function AllPosts() {
       <Search showResultCount={showResultCount} />
 
       <div className={isEditTag ? "relative" : "w-full min-h-[350px]"}>
-        {isEditTag && (
+        {/* {isEditTag && (
           <div
             className={`bg-black opacity-50 z-10 absolute w-full h-full rounded-md`}
           ></div>
-        )}
-        {isEditTag && <EditTagModal tags={tagList} />}
+        )} */}
+        {/* {isEditTag && <EditTagModal tags={tagList} />} */}
         {!isEditTag && showAlert && (
           <Alert alertType={alertType} alertText={alertText} />
         )}
@@ -58,12 +58,12 @@ function AllPosts() {
           <Loading />
         ) : allVideos.length === 0 ? (
           <span className="text-center block text-slate-600 font-semibold text-lg -mt-2">
-            Không tìm thấy video nào có tag "{tag}"
+            Không tìm thấy video nào {tag ? <span>có tag "{tag}"</span> : ""}
           </span>
         ) : (
           <>
             <span className="text-left ml-4 mb-3 -mt-2 block text-slate-600 font-semibold text-md">
-              {`Có ${allVideos.length} kết quả `}
+              {`Có ${total} kết quả `}
               {tag && (
                 <span>
                   cho tag <span className="italic font-bold">"{tag}"</span>

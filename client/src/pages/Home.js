@@ -18,7 +18,7 @@ function Home() {
   } = useAppContext();
   useEffect(() => {
     getAllVideoHome(tagSearch, categorySearch, page);
-  }, [page]);
+  }, [page, tagSearch, categorySearch]);
   //saving tags
   const showResultCount = (tag) => {
     setTag(tag);
@@ -40,7 +40,7 @@ function Home() {
         ) : (
           <>
             <span className="text-left ml-4 mb-3 -mt-2 block text-slate-600 font-semibold text-md">
-              {`Có ${allVideos.length} kết quả `}
+              {`Có ${total} kết quả `}
               {tag && (
                 <span>
                   cho tag <span className="italic font-bold">"{tag}"</span>

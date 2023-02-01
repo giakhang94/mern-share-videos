@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppContext } from "../context/appContext";
+import AddTag from "./AddTag";
 import FlexibleInput from "./FlexibleInput";
 import SmallLoading from "./SmallLoading";
 
@@ -10,13 +11,17 @@ function VideoCard({ data }) {
     reloadPage,
     showModal,
     hideModal,
+    saveTag,
     isEditTag,
+    // isEditTag,
     tagList,
     deleteVideo,
+    page,
   } = useAppContext();
   //state
   const { isAdmin } = useAppContext();
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState({ isEdit: false, isEditTag: false });
+  // const [isEditTag, setIsEditTag] = useState(false);
   const [inputData, setInputData] = useState({
     title: data.title,
     description: data.description,
@@ -35,24 +40,27 @@ function VideoCard({ data }) {
       ) : (
         <>
           <div className={`thumb-auth relative h-[180px]`}>
-            <div className="rounded-md h-full ">
-              <img
-                src={data.thumbnail}
-                alt=""
-                className="rounded-md object-cover h-auto max-h-[180px] w-full"
-              />
-            </div>
-            {isAdmin && (
+            {!isEdit.isEditTag && (
+              <div className="rounded-md h-full ">
+                <img
+                  src={data.thumbnail}
+                  alt=""
+                  className="rounded-md object-cover h-auto max-h-[180px] w-full"
+                />
+              </div>
+            )}
+            {isEdit.isEditTag && <AddTag data={data.tag} />}
+            {isAdmin && !isEdit.isEditTag && (
               <FlexibleInput
                 type={"span"}
                 className="truncate max-w-[150px] absolute py-[3] px-2 bg-[#AF6A44] opacity-80 text-white font-semibold tracking-[1px] top-1 right-1 rounded-md"
               >
-                Created by: {data.creatorName || "Auth"}
+                By: {data.creatorName || "Auth"}
               </FlexibleInput>
             )}
-            {!isEdit && (
+            {!isEdit.isEdit && (
               <FlexibleInput
-                type={isEdit ? "input" : "span"}
+                type={isEdit.isEdit ? "input" : "span"}
                 className={`text-lg bg-blue-500 absolute bottom-[20%] px-2 py-[3px] m-1 text-white font-semibold opacity-80 rounded-md`}
                 value={inputData.caption}
               >
@@ -61,43 +69,60 @@ function VideoCard({ data }) {
             )}
           </div>
           <div className="info px-1 mt-1">
-            <a href={isEdit ? "#" : data.link}>
+            {isEdit.isEdit && (
+              <label className="text-sm text-slate-700 font-semibold">
+                Title:
+              </label>
+            )}
+            <a href={isEdit.isEdit ? "#" : data.link}>
               <FlexibleInput
                 name="title"
                 value={inputData.title}
                 handleChange={handleChangeInput}
-                type={isEdit ? "input" : "p"}
+                type={isEdit.isEdit ? "input" : "p"}
                 className="font-bold tracking-[1px] text-left text-slate-700 truncate text-sm"
               >
                 {data.title}
               </FlexibleInput>
             </a>
+            {isEdit.isEdit && (
+              <label className="text-sm text-slate-700 font-semibold">
+                Description:
+              </label>
+            )}
             <FlexibleInput
               name="description"
               value={inputData.description}
               handleChange={handleChangeInput}
-              type={isEdit ? "input" : "p"}
+              type={isEdit.isEdit ? "input" : "p"}
               className="italic text-sm text-left text-slate-500 truncate"
             >
               {data.description}
             </FlexibleInput>
-            {isEdit && (
-              <FlexibleInput
-                name="caption"
-                handleChange={handleChangeInput}
-                type={isEdit ? "input" : "span"}
-                className={`text-lg bg-blue-500 absolute bottom-[20%] px-2 py-[3px] m-1 text-white font-semibold opacity-80 rounded-md`}
-                value={inputData.caption}
-              >
-                {data.caption}
-              </FlexibleInput>
+            {isEdit.isEdit && (
+              <>
+                {isEdit.isEdit && (
+                  <label className="text-sm text-slate-700 font-semibold">
+                    Caption:
+                  </label>
+                )}
+                <FlexibleInput
+                  name="caption"
+                  handleChange={handleChangeInput}
+                  type={isEdit.isEdit ? "input" : "span"}
+                  className={`text-lg bg-blue-500 absolute bottom-[20%] px-2 py-[3px] m-1 text-white font-semibold opacity-80 rounded-md`}
+                  value={inputData.caption}
+                >
+                  {data.caption}
+                </FlexibleInput>
+              </>
             )}
             <div className="btn flex items-center justify-between mx-1 my-1">
-              {!isEdit ? (
+              {!isEdit.isEdit ? (
                 <button
                   className="px-2 py-1 bg-red-200 text-red-500 tracking-[1.5px] font-semibold rounded-sm cursor-pointer"
                   onClick={() => {
-                    deleteVideo(data._id);
+                    deleteVideo(data._id, page);
                   }}
                 >
                   Xoá
@@ -106,28 +131,23 @@ function VideoCard({ data }) {
                 <button
                   className="px-2 py-1 bg-red-200 text-red-500 tracking-[1.5px] font-semibold rounded-sm cursor-pointer"
                   onClick={() => {
-                    hideModal();
-                    setIsEdit(false);
+                    // hideModal();
+                    setIsEdit((prev) => ({ isEdit: false, isEditTag: false }));
                   }}
                 >
                   Cancel
                 </button>
               )}
-              {isEdit && (
-                <button
-                  className="px-2 py-1 bg-blue-200 text-blue-500 tracking-[1.5px] font-semibold rounded-sm cursor-pointer"
-                  onClick={() => {
-                    showModal(data.tag);
-                  }}
-                >
-                  Sửa Tag
-                </button>
-              )}
-              {!isEdit ? (
+
+              {!isEdit.isEdit ? (
                 <button
                   className="px-2 py-1 bg-green-200 text-green-500 tracking-[1.5px] font-semibold rounded-sm cursor-pointer"
                   onClick={() => {
-                    setIsEdit(true);
+                    setIsEdit((prev) => ({
+                      ...prev,
+                      isEdit: true,
+                      isEditTag: true,
+                    }));
                   }}
                 >
                   Sửa

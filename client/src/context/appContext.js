@@ -301,11 +301,12 @@ const AppContextProvier = ({ children }) => {
   const saveTag = (tag) => {
     dispatch({ type: SAVE_TAG, payload: { tag } });
   };
-  const deleteVideo = async (id) => {
+  const deleteVideo = async (id, page) => {
     dispatch({ type: VIDEO_DELETE_BEGIN });
     try {
       await authFetch.delete(`video/${id}`);
       dispatch({ type: VIDEO_DELETE_SUCCESS });
+      // getAllVideo({ tag: "", category: "all", page });
     } catch (error) {
       dispatch({
         type: VIDEO_DELETE_ERROR,

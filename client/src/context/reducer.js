@@ -356,7 +356,7 @@ function reducer(state, action) {
     return {
       ...state,
       isEditTag: false,
-      tagList: [],
+      // tagList: [],
     };
   }
   if (action.type === SAVE_TAG) {
@@ -368,6 +368,7 @@ function reducer(state, action) {
   if (action.type === VIDEO_DELETE_BEGIN) {
     return {
       ...state,
+      isDoneCreateVideo: false,
       isLoading: true,
     };
   }
@@ -375,7 +376,7 @@ function reducer(state, action) {
     return {
       ...state,
       isLoading: false,
-      reloadPage: !state.reloadPage,
+      isDoneCreateVideo: true,
     };
   }
   if (action.type === VIDEO_DELETE_ERROR) {

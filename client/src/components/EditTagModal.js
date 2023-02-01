@@ -15,7 +15,7 @@ function EditTagModal({ tags }) {
     saveTag,
   } = useAppContext();
   const [input, setInput] = useState("");
-  const [listTag, setListTag] = useState([...tags]);
+  const [listTag, setListTag] = useState([]);
   const tagRef = useRef();
   const handleSaveTag = (e) => {
     e.preventDefault();
@@ -62,10 +62,11 @@ function EditTagModal({ tags }) {
             );
           })}
       </div>
-      <form className="flex border border-gray-300 rounded-sm">
+      <form className="flex border border-gray-300 rounded-sm pl-2">
         <input
           ref={tagRef}
           name="tag"
+          placeholder="type and press enter to add tag..."
           type="text"
           className="p-1 block w-full outline-none"
           value={input}
@@ -96,13 +97,13 @@ function EditTagModal({ tags }) {
             setInput("");
           }}
         >
-          <MdAddCircle className="text-[#ab7a5f] text-2xl p-[1px] cursor-pointer" />
+          <MdAddCircle className="text-[#ab7a5f] text-2xl p-[1px] cursor-pointer hidden" />
         </button>
         <button
-          className="text-green-500 text-2xl p-[1px] cursor-pointer"
+          className="text-green-500 bg-green-200 text-md p-[1px] w-[100px] cursor-pointer"
           onClick={handleSaveTag}
         >
-          <AiFillSave />
+          Sửa xong
         </button>
       </form>
     </div>

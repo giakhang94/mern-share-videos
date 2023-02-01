@@ -15,6 +15,7 @@ import SearchHome from "./SearchHome";
 import Pagination from "./Pagination";
 import PaginationHome from "./PaginationHome";
 import SmallSideBar from "./SmallSideBar";
+import AddTag from "./AddTag";
 export {
   Header,
   Logo,
@@ -33,4 +34,5 @@ export {
   SearchHome,
   PaginationHome,
   SmallSideBar,
+  AddTag,
 };

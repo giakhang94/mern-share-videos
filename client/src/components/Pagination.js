@@ -12,7 +12,7 @@ export default function Pagination({ total, numOfPages }) {
   return (
     <div className="pagination flex items-center">
       <button
-        className="mr-2 h-8 block px-3 text-white rounded-sm bg-[#c59981]"
+        className="mr-2 h-8 block px-3 text-white rounded-sm bg-[#AF6A44]"
         onClick={() => {
           if (page > 1) {
             setPage(page - 1);
@@ -24,7 +24,9 @@ export default function Pagination({ total, numOfPages }) {
       {pages.map((item, index) => {
         return (
           <button
-            className="block w-8 h-8 border border-[#a5623e] rounded-sm text-white font-bold bg-[#AF6A44]"
+            className={`block w-8 h-8 border border-[#a5623e] rounded-sm text-white font-bold bg-[#AF6A44] ${
+              page === item ? "opacity-80" : ""
+            }`}
             key={index + "pagi"}
             onClick={() => {
               setPage(item);
@@ -35,7 +37,7 @@ export default function Pagination({ total, numOfPages }) {
         );
       })}
       <button
-        className="ml-2 h-8 block px-3 text-white rounded-sm bg-[#c59981]"
+        className="ml-2 h-8 block px-3 text-white rounded-sm bg-[#AF6A44]"
         onClick={() => {
           if (page < numOfPages) {
             setPage(page + 1);

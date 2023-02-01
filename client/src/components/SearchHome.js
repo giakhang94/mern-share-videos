@@ -2,28 +2,22 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 
 const SearchHome = ({ showResultCount }) => {
-  const {
-    tagSearch,
-    categorySearch,
-    setSearchValue,
-    category,
-    isLoading,
-    getAllVideoHome,
-  } = useAppContext();
+  const { tagSearch, category, getAllVideoHome } = useAppContext();
 
-  const searchValue = { tag: tagSearch, category: categorySearch };
+  const [searchValue, setSearch] = useState({ tag: "", category: "all" });
   const handleChangeInput = (e) => {
-    setSearchValue({ ...searchValue, [e.target.name]: e.target.value });
+    setSearch((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  // setSearchValue({ ...searchValue });
   useEffect(() => {
     const delayHandler = setTimeout(() => {
-      getAllVideoHome(tagSearch, categorySearch);
+      getAllVideoHome(searchValue.tag, searchValue.category);
       showResultCount(tagSearch);
     }, 800);
     return () => {
       clearTimeout(delayHandler);
     };
-  }, [tagSearch, categorySearch]);
+  }, [searchValue.tag, searchValue.category]);
   return (
     <div className="search w-full mb-5 p-3">
       <form
@@ -56,7 +50,7 @@ const SearchHome = ({ showResultCount }) => {
             placeholder="Tìm video theo tag..."
             type="text"
             onChange={handleChangeInput}
-            value={tagSearch}
+            value={searchValue.tag}
           />
         </div>
         {/* <button>SEARCH</button> */}
