@@ -12,7 +12,7 @@ import auth from "../middleware/auth.js";
 // import fileUpload from "../middleware/file-upload.js";
 const router = express.Router();
 
-router.post("/", createVideo);
+router.post("/", auth, createVideo);
 // router.post("/thumbnail", fileUpload.single("image"), uploadThumbnail);
 router.get("/getPostsByAuth", auth, getPostsByAuth);
 router.patch("/:id", auth, updateVideo);

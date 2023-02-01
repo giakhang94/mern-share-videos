@@ -4,7 +4,8 @@ import { Navigate } from "react-router-dom";
 function ProtectedUserPage({ children }) {
   const { user, isLoading } = useAppContext;
   // if (isLoading) return <Loading />;
-  if (user && user.role !== "Auth") return <Navigate to="/" />;
+  if (user && user.role !== "Auth" && user.role !== "Admin")
+    return <Navigate to="/" />;
   return <div>{children}</div>;
 }
 export default ProtectedUserPage;

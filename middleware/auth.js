@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 
 const auth = async (req, res, next) => {
   const token = req.cookies.token;
-  // console.log(token);
   if (!token) {
     throw new UnauthenticatedError("Hãy đăng nhập để thực hiện thao tác này");
   }

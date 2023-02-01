@@ -315,6 +315,7 @@ function reducer(state, action) {
   if (action.type === VIDEO_UPDATE_BEGIN) {
     return {
       ...state,
+      reloadPage: false,
       isLoading: true,
     };
   }
@@ -322,7 +323,8 @@ function reducer(state, action) {
     return {
       ...state,
       isLoading: false,
-      reloadPage: !state.reloadPage,
+      reloadPage: true,
+      isDoneCreateVideo: true,
     };
   }
   if (action.type === VIDEO_UPDATE_ERROR) {

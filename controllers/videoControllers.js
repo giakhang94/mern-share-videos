@@ -55,6 +55,7 @@ const updateVideo = async (req, res) => {
   if (!title && !description && !tag && !caption) {
     throw new BadREquestError("Hãy thay đổi thông tin, hoặc nhấn Cancel");
   }
+  console.log(req.user);
   const updaterId = req.user.userId; // id của đứa thực hiện thao tác update lên video
   const targetId = req.params.id; //id cua video được update
   //from targetId => find video => get createdBy and check permisson
