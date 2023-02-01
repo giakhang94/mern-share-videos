@@ -32,15 +32,15 @@ function Login() {
     }
   }, [user, navigate]);
   return (
-    <div className="flex items-center justify-center my-3">
+    <div className="flex items-center justify-center my-3 ">
       <form
         onSubmit={handleSubmit}
         action=""
-        className="login-form flex flex-col items-center border border-gray-300 px-8 py-5 rounded-sm  bg-white"
+        className="login-form flex flex-col items-center Plaptop:w-[350px] laptop:w-[350px] Ptablet:w-[350px] tablet:w-[300px] Pmobile:w-[280px] mobile:w-[280px] Psmallmobile:w-[280px] smallmobile:w-[230px] border border-gray-300 px-8 py-5 rounded-sm  bg-white"
       >
         <div className="flex items-center mb-5">
           <Link to="/">
-            <div className="h-12 w-auto">
+            <div className="h-12 w-12">
               <img src={logo} alt="" className="h-full w-full" />
             </div>
           </Link>

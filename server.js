@@ -37,6 +37,9 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/video", videoRouter);
 app.use("/api/v1/image", imageRouter);
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 //start server
 //error handler middlewares
 app.use(errorHandlerMiddleware);

@@ -28,10 +28,14 @@ function AllPosts() {
     tagSearch,
     categorySearch,
     getPostsByAuth,
+    isDoneCreateVideo,
   } = useAppContext();
   useEffect(() => {
     getAllVideo(tagSearch, categorySearch, page);
   }, [page]);
+  useEffect(() => {
+    getAllVideo(tagSearch, categorySearch, page);
+  }, [isDoneCreateVideo]);
   //saving tags
   const showResultCount = (tag) => {
     setTag(tag);

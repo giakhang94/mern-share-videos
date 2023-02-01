@@ -317,6 +317,7 @@ function reducer(state, action) {
       ...state,
       reloadPage: false,
       isLoading: true,
+      isDoneCreateVideo: false,
     };
   }
   if (action.type === VIDEO_UPDATE_SUCCESS) {
