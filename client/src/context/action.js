@@ -72,3 +72,5 @@ export const VIDEO_HOME_GET_ALL_ERROR = "VIDEO_HOME_GET_ALL_ERROR";
 
 export const SHOW_SIDEBAR = "SHOW_SIDEBAR";
 export const HIDE_SIDEBAR = "HIDE_SIDEBAR";
+
+export const ADD_LIST_TAG = "ADD_LIST_TAG";

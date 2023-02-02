@@ -8,21 +8,23 @@ import Alert from "./Alert";
 export default function AddTag({ data }) {
   const tagRef = useRef();
   const [input, setInput] = useState("");
-  const [listTag, setListTag] = useState([...data]);
+  // const [listTag, setListTag] = useState([...data]);
   const {
     displayAlert,
     showAlert,
     alertText,
     alertType,
+    tagList,
+    setListTag,
     isDoneCreateVideo,
     saveTag,
     hideModal,
   } = useAppContext();
   const handleSaveTag = (e) => {
-    e.preventDefault();
-    console.log("savetag");
-    saveTag(listTag);
-    displayAlert("succes", "nhấn Save để lưu tất cả");
+    // e.preventDefault();
+    // console.log("savetag");
+    // saveTag(listTag);
+    // displayAlert("succes", "nhấn Save để lưu tất cả");
   };
   return (
     <>
@@ -30,9 +32,9 @@ export default function AddTag({ data }) {
         <input
           ref={tagRef}
           name="tag"
-          placeholder="enter to add, press done to save"
+          placeholder="type tag then press enter"
           type="text"
-          className="p-1 block w-full outline-none"
+          className="text-sm p-1 block w-full outline-none"
           value={input}
           onChange={(e) => {
             setInput(e.target.value);
@@ -42,13 +44,13 @@ export default function AddTag({ data }) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            if (listTag.length >= 20) {
+            if (tagList.length >= 20) {
               displayAlert("danger", "Không thể tạo nhiều hơn 20 tag");
             } else {
-              const Arr = [...listTag];
+              const Arr = [...tagList];
               const isExisted = Arr.find((tag) => input === tag);
               if (!isExisted) {
-                setListTag((prev) => [...prev, input]);
+                setListTag(input);
               } else {
                 displayAlert("danger", "Tag này vừa được thêm");
               }
@@ -57,20 +59,14 @@ export default function AddTag({ data }) {
             setInput("");
           }}
         >
-          <MdAddCircle className="text-[#ab7a5f] text-2xl p-[1px] cursor-pointer hidden" />
-        </button>
-        <button
-          className="text-green-500 bg-green-200 text-md p-[1px] w-[100px] cursor-pointer"
-          onClick={handleSaveTag}
-        >
-          Done
+          <MdAddCircle className="text-[#ab7a5f] text-2xl p-[1px] cursor-pointer" />
         </button>
       </form>
       <div className="tag-container flex space-x-3 flex-wrap mt-3">
         {showAlert && <Alert alertText={alertText} alertType={alertType} />}
-        {listTag &&
-          listTag.length > 0 &&
-          listTag.map((tag, index) => {
+        {tagList &&
+          tagList.length > 0 &&
+          tagList.map((tag, index) => {
             return (
               <p key={index} className="grid grid-cols-auto relative m-1">
                 <span className="bg-[#bb937daf] px-2 py-[1px] pr-4 block rounded-md">
@@ -79,9 +75,9 @@ export default function AddTag({ data }) {
                 <span
                   className="ml-1 cursor-pointer text-sm absolute right-[1px] top-[1px]  text-white font-bold rounded-[50%]"
                   onClick={() => {
-                    const Arr = [...listTag];
+                    const Arr = [...tagList];
                     Arr.splice(index, 1);
-                    setListTag(Arr);
+                    saveTag(Arr);
                   }}
                 >
                   <AiOutlineClose className="font-bold" />

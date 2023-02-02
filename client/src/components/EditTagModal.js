@@ -13,14 +13,16 @@ function EditTagModal({ tags }) {
     showAlert,
     displayAlert,
     saveTag,
+    tagList,
+    setListTag,
   } = useAppContext();
   const [input, setInput] = useState("");
-  const [listTag, setListTag] = useState([]);
+  // const [, setListTag] = useState([]);
   const tagRef = useRef();
   const handleSaveTag = (e) => {
     e.preventDefault();
     hideModal();
-    saveTag(listTag);
+    saveTag(tagList);
   };
   return (
     <div className="p-2 rounded-md border border-gray-300 w-[90%] m-2 absolute top-[30%] z-10 bg-white -translate-y-[50%] left-[50%] -translate-x-[51%]">
@@ -40,9 +42,9 @@ function EditTagModal({ tags }) {
         {isEditTag && showAlert && (
           <Alert alertText={alertText} alertType={alertType} />
         )}
-        {listTag &&
-          listTag.length > 0 &&
-          listTag.map((tag, index) => {
+        {tagList &&
+          tagList.length > 0 &&
+          tagList.map((tag, index) => {
             return (
               <p key={index} className="grid grid-cols-auto relative m-1">
                 <span className="bg-[#bb937daf] px-2 py-[1px] pr-4 block rounded-md">
@@ -51,9 +53,9 @@ function EditTagModal({ tags }) {
                 <span
                   className="ml-1 cursor-pointer text-sm absolute right-[1px] top-[1px]  text-white font-bold rounded-[50%]"
                   onClick={() => {
-                    const Arr = [...listTag];
+                    const Arr = [...tagList];
                     Arr.splice(index, 1);
-                    setListTag(Arr);
+                    saveTag(Arr);
                   }}
                 >
                   <AiOutlineClose className="font-bold" />
@@ -78,16 +80,16 @@ function EditTagModal({ tags }) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            if (listTag.length >= 20) {
+            if (tagList.length >= 20) {
               displayAlert("danger", "Không thể tạo nhiều hơn 20 tag");
             } else {
-              const Arr = [...listTag];
+              const Arr = [...tagList];
               const isExisted = Arr.find((tag) => input === tag);
               if (input === "" || input.trim().length === 0) {
                 displayAlert("danger", "Xin đừng add tag rỗng ạ!");
               } else {
                 if (!isExisted) {
-                  setListTag((prev) => [...prev, input]);
+                  setListTag(input);
                 } else {
                   displayAlert("danger", "Tag này vừa được thêm");
                 }

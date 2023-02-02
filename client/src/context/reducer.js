@@ -1,4 +1,5 @@
 import {
+  ADD_LIST_TAG,
   ADMIN_DELETE_USER_BEGIN,
   ADMIN_DELETE_USER_ERROR,
   ADMIN_DELETE_USER_SUCCESS,
@@ -463,6 +464,13 @@ function reducer(state, action) {
     return {
       ...state,
       sidebar: false,
+    };
+  }
+  //set tag list
+  if (action.type === ADD_LIST_TAG) {
+    return {
+      ...state,
+      tagList: [...state.tagList, action.payload.tag],
     };
   }
 }

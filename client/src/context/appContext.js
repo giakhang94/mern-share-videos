@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "./reducer";
 import {
+  ADD_LIST_TAG,
   ADMIN_DELETE_USER_BEGIN,
   ADMIN_DELETE_USER_ERROR,
   ADMIN_DELETE_USER_SUCCESS,
@@ -365,6 +366,10 @@ const AppContextProvier = ({ children }) => {
   const hideSidebar = () => {
     dispatch({ type: HIDE_SIDEBAR });
   };
+  //add tag to global variable
+  const setListTag = (tag) => {
+    dispatch({ type: ADD_LIST_TAG, payload: { tag } });
+  };
   //useEffect to get login user infomation from cookie
   useEffect(() => {
     getCurrentUser();
@@ -398,6 +403,7 @@ const AppContextProvier = ({ children }) => {
         getAllVideoHome, //home page
         showSidebar,
         hideSidebar,
+        setListTag,
       }}
     >
       {children}
