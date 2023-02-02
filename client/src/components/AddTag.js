@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdAddCircle } from "react-icons/md";
 import { HIDE_TAGS_MODAL } from "../context/action";
@@ -20,12 +20,9 @@ export default function AddTag({ data }) {
     saveTag,
     hideModal,
   } = useAppContext();
-  const handleSaveTag = (e) => {
-    // e.preventDefault();
-    // console.log("savetag");
-    // saveTag(listTag);
-    // displayAlert("succes", "nhấn Save để lưu tất cả");
-  };
+  useEffect(() => {
+    saveTag(data);
+  }, []);
   return (
     <>
       <form className="flex border border-gray-300 rounded-sm">

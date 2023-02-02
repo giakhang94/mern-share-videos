@@ -31,6 +31,7 @@ function VideoCard({ data }) {
     setInputData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleUpdate = () => {
+    console.log(tagList);
     updateVideo({ ...inputData, tag: tagList }, data._id);
   };
   return (
