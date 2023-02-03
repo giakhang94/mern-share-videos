@@ -10,6 +10,7 @@ import {
   ADMIN_GET_ALL_USER_SUCCESS,
   CLEAR_ALERT,
   DISPLAY_ALERT,
+  DISPLAY_TAG_ALERT,
   GET_CURRENT_USER_BEGIN,
   GET_CURRENT_USER_ERROR,
   GET_CURRENT_USER_SUCCESS,
@@ -62,6 +63,7 @@ const initState = {
   reloadPage: false,
   isLoading: false,
   showAlert: false,
+  showAlertTag: false,
   //pagi
   numOfPages: 1,
   page: 1,
@@ -370,6 +372,12 @@ const AppContextProvier = ({ children }) => {
   const setListTag = (tag) => {
     dispatch({ type: ADD_LIST_TAG, payload: { tag } });
   };
+  const displayTagAlert = (type, message) => {
+    dispatch({ type: DISPLAY_TAG_ALERT, payload: { type, message } });
+    setTimeout(() => {
+      clearAlert();
+    }, 3000);
+  };
   //useEffect to get login user infomation from cookie
   useEffect(() => {
     getCurrentUser();
@@ -404,6 +412,7 @@ const AppContextProvier = ({ children }) => {
         showSidebar,
         hideSidebar,
         setListTag,
+        displayTagAlert,
       }}
     >
       {children}

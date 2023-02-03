@@ -10,8 +10,8 @@ export default function AddTag({ data }) {
   const [input, setInput] = useState("");
   // const [listTag, setListTag] = useState([...data]);
   const {
-    displayAlert,
-    showAlert,
+    showAlertTag,
+    displayTagAlert,
     alertText,
     alertType,
     tagList,
@@ -41,15 +41,20 @@ export default function AddTag({ data }) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            if (tagList.length >= 20) {
-              displayAlert("danger", "Không thể tạo nhiều hơn 20 tag");
+            const inputTrim = input.trim();
+            if (input === "" || inputTrim.length === 0) {
+              displayTagAlert("danger", "Không thể thêm tag rỗng");
             } else {
-              const Arr = [...tagList];
-              const isExisted = Arr.find((tag) => input === tag);
-              if (!isExisted) {
-                setListTag(input);
+              if (tagList.length >= 20) {
+                displayTagAlert("danger", "Không thể tạo nhiều hơn 20 tag");
               } else {
-                displayAlert("danger", "Tag này vừa được thêm");
+                const Arr = [...tagList];
+                const isExisted = Arr.find((tag) => input === tag);
+                if (!isExisted) {
+                  setListTag(input);
+                } else {
+                  displayTagAlert("danger", "Tag này vừa được thêm");
+                }
               }
             }
             tagRef.current.focus();
@@ -60,7 +65,7 @@ export default function AddTag({ data }) {
         </button>
       </form>
       <div className="tag-container flex space-x-3 flex-wrap mt-3">
-        {showAlert && <Alert alertText={alertText} alertType={alertType} />}
+        {showAlertTag && <Alert alertText={alertText} alertType={alertType} />}
         {tagList &&
           tagList.length > 0 &&
           tagList.map((tag, index) => {

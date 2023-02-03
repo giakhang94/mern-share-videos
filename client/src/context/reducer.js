@@ -8,6 +8,7 @@ import {
   ADMIN_GET_ALL_USER_SUCCESS,
   CLEAR_ALERT,
   DISPLAY_ALERT,
+  DISPLAY_TAG_ALERT,
   GET_CURRENT_USER_BEGIN,
   GET_CURRENT_USER_ERROR,
   GET_CURRENT_USER_SUCCESS,
@@ -163,6 +164,7 @@ function reducer(state, action) {
     return {
       ...state,
       showAlert: false,
+      showAlertTag: false,
     };
   }
   if (action.type === USER_LOGOUT) {
@@ -471,6 +473,14 @@ function reducer(state, action) {
     return {
       ...state,
       tagList: [...state.tagList, action.payload.tag],
+    };
+  }
+  if (action.type === DISPLAY_TAG_ALERT) {
+    return {
+      ...state,
+      showAlertTag: true,
+      alertText: action.payload.message,
+      alertType: action.payload.type,
     };
   }
 }
