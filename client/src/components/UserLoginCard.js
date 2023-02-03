@@ -5,14 +5,14 @@ function UserLoginCard() {
   return (
     <div className="user-card">
       Profile
-      <div
+      {/* <div
         onClick={() => {
           logout();
         }}
         className="user-card-logout bg-[#be947d] text-white font-semibold py-[3px] px-1 rounded-sm text-sm hidden"
       >
         Logout
-      </div>
+      </div> */}
     </div>
   );
 }

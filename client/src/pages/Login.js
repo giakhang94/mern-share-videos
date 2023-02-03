@@ -24,6 +24,7 @@ function Login() {
     e.preventDefault();
     const loginData = { userName, password };
     login(loginData);
+    handleChange({ password: "" });
   };
   useEffect(() => {
     if (user) {

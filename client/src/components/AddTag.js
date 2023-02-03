@@ -64,7 +64,7 @@ export default function AddTag({ data }) {
           <MdAddCircle className="text-[#ab7a5f] text-2xl p-[1px] cursor-pointer" />
         </button>
       </form>
-      <div className="tag-container flex space-x-3 flex-wrap mt-3">
+      <div className="tag-container flex space-x-3 flex-wrap mt-3 mb-3">
         {showAlertTag && <Alert alertText={alertText} alertType={alertType} />}
         {tagList &&
           tagList.length > 0 &&

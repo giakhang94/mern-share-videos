@@ -41,16 +41,13 @@ function VideoCard({ data }) {
       ) : (
         <>
           <div className={`thumb-auth relative h-[180px]`}>
-            {!isEdit.isEditTag && (
-              <div className="rounded-md h-full ">
-                <img
-                  src={data.thumbnail}
-                  alt=""
-                  className="rounded-md object-cover h-auto max-h-[180px] w-full"
-                />
-              </div>
-            )}
-            {isEdit.isEditTag && <AddTag data={data.tag} />}
+            <div className="rounded-md h-full ">
+              <img
+                src={data.thumbnail}
+                alt=""
+                className="rounded-md object-cover h-auto max-h-[180px] w-full"
+              />
+            </div>
             {isAdmin && !isEdit.isEditTag && (
               <FlexibleInput
                 type={"span"}
@@ -118,6 +115,11 @@ function VideoCard({ data }) {
                 </FlexibleInput>
               </>
             )}
+            <label className="text-sm text-slate-700 font-semibold mt-1">
+              Eidt tags
+            </label>
+            {isEdit.isEditTag && <AddTag data={data.tag} />}
+
             <div className="btn flex items-center justify-between mx-1 my-1">
               {!isEdit.isEdit ? (
                 <button
