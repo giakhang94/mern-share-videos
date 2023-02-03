@@ -34,7 +34,7 @@ function ProfileUser() {
       {/* <div className="sidbar w-[300px] bg-blue-100 -mt-10">
         <SideBar />
       </div> */}
-      <div className="content flex-1 flex flex-col items-center justify-center">
+      <div className="content flex-1 flex flex-col items-center">
         <div className="form-user">
           <h3 className="text-center text-slate-700 font-semibold tracking-[1px]">
             Sadhu.. Xin Chào,
