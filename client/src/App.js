@@ -19,11 +19,51 @@ import {
 } from "./pages/dashboard";
 import ProtectedUserPage from "./pages/ProtectedUserPage";
 import ShareLayoutUser from "./pages/dashboard/ShareLayoutUser";
+
+const profileElement = {
+  Admin: (
+    <ProtectedAdminPage>
+      <ShareLayout />
+    </ProtectedAdminPage>
+  ),
+  Auth: (
+    <ProtectedUserPage>
+      <ShareLayoutUser />
+    </ProtectedUserPage>
+  ),
+};
+
+const profileTopElement = {
+  Admin: <Profile />,
+  Auth: <ProfileUser />,
+};
+
+const profileRoutesByRole = {
+  Admin: (
+    <>
+      <Route path="/profile/admin/all-users" element={<AllUser />} />
+      <Route path="/profile/admin/all-posts" element={<AllPosts />} />
+      <Route path="/profile/admin/add-post" element={<AddPost />} />
+      <Route path="/profile/admin/add-user" element={<AddUser />} />
+      <Route path="/profile/admin/add-thumbnail" element={<AddThumbnail />} />
+    </>
+  ),
+  Auth: (
+    <>
+      <Route path="/profile/user/add-post" element={<AddPost />} />
+      <Route path="/profile/user/all-posts" element={<AllPosts />} />
+
+      <Route path="/profile/user/add-thumbnail" element={<AddThumbnail />} />
+    </>
+  ),
+};
+
 function App() {
-  const state = useAppContext();
+  const { isLogin, user } = useAppContext();
   // if (state.isLoading) {
   //   return <Loading />;
   // }
+
   return (
     <Router>
       <Header />
@@ -31,52 +71,10 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route
           path="/profile"
-          element={
-            state.isLogin && state.user.role === "Admin" ? (
-              <ProtectedAdminPage>
-                <ShareLayout />
-              </ProtectedAdminPage>
-            ) : state.isLogin && state.user.role === "Auth" ? (
-              <ProtectedUserPage>
-                <ShareLayoutUser />
-              </ProtectedUserPage>
-            ) : (
-              <Login />
-            )
-          }
+          element={isLogin && user ? profileElement[user.role] : <Login />}
         >
-          <Route
-            index
-            element={
-              state.user && state.user.role === "Admin" ? (
-                <Profile />
-              ) : (
-                <ProfileUser />
-              )
-            }
-          />
-          {state.user && state.user.role === "Admin" ? (
-            <>
-              <Route path="/profile/admin/all-users" element={<AllUser />} />
-              <Route path="/profile/admin/all-posts" element={<AllPosts />} />
-              <Route path="/profile/admin/add-post" element={<AddPost />} />
-              <Route path="/profile/admin/add-user" element={<AddUser />} />
-              <Route
-                path="/profile/admin/add-thumbnail"
-                element={<AddThumbnail />}
-              />
-            </>
-          ) : (
-            <>
-              <Route path="/profile/user/add-post" element={<AddPost />} />
-              <Route path="/profile/user/all-posts" element={<AllPosts />} />
-
-              <Route
-                path="/profile/user/add-thumbnail"
-                element={<AddThumbnail />}
-              />
-            </>
-          )}
+          {user && <Route index element={profileTopElement[user.role]} />}
+          {user && profileRoutesByRole[user.role]}
         </Route>
 
         <Route path="/" element={<Home />} />
