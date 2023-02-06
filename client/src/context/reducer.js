@@ -237,7 +237,7 @@ function reducer(state, action) {
     return {
       ...state,
       isloading: false,
-      showAlert: true,
+      showAlert: false,
       alertType: "success",
       alertText: "Đã tải thumb lên kho ảnh xong",
     };

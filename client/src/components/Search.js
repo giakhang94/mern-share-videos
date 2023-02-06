@@ -55,7 +55,7 @@ const Search = ({ showResultCount }) => {
           <input
             name="tag"
             className="block w-2/4 ml-2 border border-gray-300 p-1 rounded-sm text-sm"
-            placeholder="Tìm video theo tag..."
+            placeholder="enter tag, exp: thien, test, Ha noi..."
             type="text"
             onChange={handleChangeInput}
             value={searchValue.tag}
