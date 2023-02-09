@@ -14,6 +14,10 @@ import auth from "./middleware/auth.js";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
+//socket.io
+import cors from "cors";
+import { Server } from "socket.io";
+import http from "http";
 
 const app = express();
 dotenv.config();
@@ -40,6 +44,22 @@ app.use("/api/v1/image", imageRouter);
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
+//socket.io
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+io.on("connection", (socket) => {
+  socket.on("join_comment", (data) => {
+    socket.join(data);
+  });
+  socket.on("send_comment", (data) => {
+    socket.to(data.id).emit("sendback_comment", data);
+  });
+});
 //start server
 //error handler middlewares
 app.use(errorHandlerMiddleware);
@@ -47,7 +67,7 @@ app.use(NotFoundErrorMiddleware);
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URL);
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`server is on port ${port}...`);
     });
   } catch (error) {

@@ -6,7 +6,10 @@ const SearchHome = ({ showResultCount }) => {
 
   const [searchValue, setSearch] = useState({ tag: "", category: "all" });
   const handleChangeInput = (e) => {
-    setSearch((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setSearch((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
   // setSearchValue({ ...searchValue });
   useEffect(() => {

@@ -72,7 +72,7 @@ function VideoCard({ data }) {
                 Title:
               </label>
             )}
-            <a href={isEdit.isEdit ? "#" : data.link}>
+            <a href="#">
               <FlexibleInput
                 name="title"
                 value={inputData.title}
@@ -115,9 +115,11 @@ function VideoCard({ data }) {
                 </FlexibleInput>
               </>
             )}
-            <label className="text-sm text-slate-700 font-semibold mt-1">
-              Eidt tags
-            </label>
+            {isEdit.isEditTag && (
+              <label className="text-sm text-slate-700 font-semibold mt-1">
+                Eidt tags
+              </label>
+            )}
             {isEdit.isEditTag && <AddTag data={data.tag} />}
 
             <div className="btn flex items-center justify-between mx-1 my-1">

@@ -46,6 +46,20 @@ const VideoSchema = mongoose.Schema({
     enum: ["Kalama", "A Tỳ Đàm", "Truyện Phím", "Hỏi Đáp", "Kinh Tạng"],
     required: [true, "Hãy chọn category cho video"],
   },
+  comment: [
+    {
+      comment: {
+        type: String,
+        maxLenght: 500,
+        minLength: 3,
+      },
+      userName: {
+        type: String,
+        maxLength: 20,
+        minLength: 3,
+      },
+    },
+  ],
 });
 
 const Video = mongoose.model("Video", VideoSchema);

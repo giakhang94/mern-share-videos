@@ -27,6 +27,11 @@ const createVideo = async (req, res) => {
   req.body.creatorName = user.name;
   req.body.createdBy = req.user.userId;
   req.body.thumbnail = thumb;
+  if (req.body.tag.length > 0) {
+    req.body.tag.map((tag, index) => {
+      req.body.tag[index] = req.body.tag[index].toLowerCase();
+    });
+  }
   const video = await Video.create(req.body);
   await video.save();
   res.status(201).json({ video });
@@ -55,6 +60,7 @@ const updateVideo = async (req, res) => {
   if (!title && !description && !tag && !caption) {
     throw new BadREquestError("Hãy thay đổi thông tin, hoặc nhấn Cancel");
   }
+
   const updaterId = req.user.userId; // id của đứa thực hiện thao tác update lên video
   const targetId = req.params.id; //id cua video được update
   //from targetId => find video => get createdBy and check permisson
@@ -79,6 +85,11 @@ const updateVideo = async (req, res) => {
     video.description = description;
   }
   if (tag) {
+    if (tag.length > 0) {
+      tag.map((tagItem, index) => {
+        tag[index] = tagItem.toLowerCase();
+      });
+    }
     video.tag = tag;
   }
   if (caption) {
@@ -169,6 +180,21 @@ const getAllVideoHome = async (req, res) => {
   const numOfPages = Math.ceil(total / limit);
   res.status(200).json({ videos, total, numOfPages, role });
 };
+const getVideoById = async (req, res) => {
+  const video = await Video.findOne({ _id: req.params.id });
+  if (!video) {
+    throw new NotFoundError("có thể video đã bị xoá");
+  }
+  res.status(200).json({ video });
+};
+//comment
+const addComment = async (req, res) => {
+  const { comment, userName, id } = req.body;
+  const video = await Video.findOne({ _id: id });
+  video.comment.push({ comment, userName });
+  await video.save();
+  res.status(201).json({ video });
+};
 export {
   createVideo,
   uploadThumbnail,
@@ -177,4 +203,6 @@ export {
   deleteVideo,
   getAllVideo,
   getAllVideoHome,
+  getVideoById,
+  addComment,
 };

@@ -5,7 +5,14 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
-import { About, Home, Login, Profile, ProtectedAdminPage } from "./pages";
+import {
+  About,
+  Home,
+  Login,
+  Profile,
+  ProtectedAdminPage,
+  Video,
+} from "./pages";
 import { Header, Loading } from "./components";
 import { useAppContext } from "./context/appContext";
 import ShareLayout from "./pages/dashboard/shareLayout";
@@ -78,6 +85,7 @@ function App() {
         </Route>
 
         <Route path="/" element={<Home />} />
+        <Route path="/video/:id" element={<Video />} />
         <Route path="*" element="page not found" />
       </Routes>
     </Router>

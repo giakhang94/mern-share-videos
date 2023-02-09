@@ -9,6 +9,9 @@ import {
   ADMIN_GET_ALL_USER_ERROR,
   ADMIN_GET_ALL_USER_SUCCESS,
   CLEAR_ALERT,
+  COMMENT_ADD_BEGIN,
+  COMMENT_ADD_ERROR,
+  COMMENT_ADD_SUCCESS,
   DISPLAY_ALERT,
   DISPLAY_TAG_ALERT,
   GET_CURRENT_USER_BEGIN,
@@ -49,6 +52,9 @@ import {
   VIDEO_GET_BY_AUTH_BEGIN,
   VIDEO_GET_BY_AUTH_ERROR,
   VIDEO_GET_BY_AUTH_SUCCESS,
+  VIDEO_GET_BY_ID_BEGIN,
+  VIDEO_GET_BY_ID_ERROR,
+  VIDEO_GET_BY_ID_SUCCESS,
   VIDEO_HOME_GET_ALL_BEGIN,
   VIDEO_HOME_GET_ALL_ERROR,
   VIDEO_HOME_GET_ALL_SUCCESS,
@@ -62,6 +68,7 @@ import { Navigate } from "react-router-dom";
 const initState = {
   reloadPage: false,
   isLoading: false,
+  isLoadingCMT: false,
   showAlert: false,
   showAlertTag: false,
   //pagi
@@ -91,6 +98,7 @@ const initState = {
   category: ["Kalama", "A Tỳ Đàm", "Truyện Phím", "Hỏi Đáp", "Kinh Tạng"],
   //sidebar
   sidebar: false,
+  videoById: null,
 };
 const appContext = createContext();
 
@@ -323,7 +331,7 @@ const AppContextProvier = ({ children }) => {
     dispatch({ type: VIDEO_HOME_GET_ALL_BEGIN });
     let url = `/video/all?category=${category}&page=${page ? page : ""}`;
     if (tag) {
-      url = url + `&tag=${tag}`;
+      url = url + `&tag=${tag.toLowerCase()}`;
     }
     // console.log(url);
     try {
@@ -342,7 +350,7 @@ const AppContextProvier = ({ children }) => {
     dispatch({ type: VIDEO_GET_ALL_BEGIN });
     let url = `/video/all-home?category=${category}&page=${page ? page : ""}`;
     if (tag) {
-      url = url + `&tag=${tag}`;
+      url = url + `&tag=${tag.toLowerCase()}`;
     }
     // console.log(url);
     try {
@@ -377,6 +385,34 @@ const AppContextProvier = ({ children }) => {
     setTimeout(() => {
       clearAlert();
     }, 3000);
+  };
+  //get video by id, add comment
+  const getVideoById = async (id) => {
+    dispatch({ type: VIDEO_GET_BY_ID_BEGIN });
+    try {
+      const { data } = await authFetch.get(`/video/${id}`);
+      dispatch({ type: VIDEO_GET_BY_ID_SUCCESS, payload: { data } });
+    } catch (error) {
+      dispatch({
+        type: VIDEO_GET_BY_ID_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+  //comment
+  const addComment = async ({ userName, comment, id }) => {
+    dispatch({ type: COMMENT_ADD_BEGIN });
+    try {
+      const { data } = await authFetch.post(`/video/${id}/comment`, {
+        userName,
+        comment,
+        id,
+      });
+      dispatch({ type: COMMENT_ADD_SUCCESS });
+    } catch (error) {
+      dispatch({ type: COMMENT_ADD_ERROR });
+    }
   };
   //useEffect to get login user infomation from cookie
   useEffect(() => {
@@ -413,6 +449,8 @@ const AppContextProvier = ({ children }) => {
         hideSidebar,
         setListTag,
         displayTagAlert,
+        getVideoById,
+        addComment,
       }}
     >
       {children}

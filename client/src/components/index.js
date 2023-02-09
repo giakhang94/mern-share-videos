@@ -16,6 +16,7 @@ import Pagination from "./Pagination";
 import PaginationHome from "./PaginationHome";
 import SmallSideBar from "./SmallSideBar";
 import AddTag from "./AddTag";
+import MyEditor from "./TextEditor";
 export {
   Header,
   Logo,
@@ -35,4 +36,5 @@ export {
   PaginationHome,
   SmallSideBar,
   AddTag,
+  MyEditor,
 };

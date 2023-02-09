@@ -7,6 +7,9 @@ import {
   ADMIN_GET_ALL_USER_ERROR,
   ADMIN_GET_ALL_USER_SUCCESS,
   CLEAR_ALERT,
+  COMMENT_ADD_BEGIN,
+  COMMENT_ADD_ERROR,
+  COMMENT_ADD_SUCCESS,
   DISPLAY_ALERT,
   DISPLAY_TAG_ALERT,
   GET_CURRENT_USER_BEGIN,
@@ -48,6 +51,9 @@ import {
   VIDEO_GET_BY_AUTH_BEGIN,
   VIDEO_GET_BY_AUTH_ERROR,
   VIDEO_GET_BY_AUTH_SUCCESS,
+  VIDEO_GET_BY_ID_BEGIN,
+  VIDEO_GET_BY_ID_ERROR,
+  VIDEO_GET_BY_ID_SUCCESS,
   VIDEO_HOME_GET_ALL_BEGIN,
   VIDEO_HOME_GET_ALL_ERROR,
   VIDEO_HOME_GET_ALL_SUCCESS,
@@ -481,6 +487,46 @@ function reducer(state, action) {
       showAlertTag: true,
       alertText: action.payload.message,
       alertType: action.payload.type,
+    };
+  }
+  if (action.type === VIDEO_GET_BY_ID_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === VIDEO_GET_BY_ID_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      videoById: action.payload.data.video,
+    };
+  }
+  if (action.type === VIDEO_GET_BY_ID_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertText: action.payload.msg,
+      alertType: "danger",
+    };
+  }
+  if (action.type === COMMENT_ADD_BEGIN) {
+    return {
+      ...state,
+      isLoadingCMT: true,
+    };
+  }
+  if (action.type === COMMENT_ADD_SUCCESS) {
+    return {
+      ...state,
+      isLoadingCMT: false,
+    };
+  }
+  if (action.type === COMMENT_ADD_ERROR) {
+    return {
+      ...state,
+      isLoadingCMT: false,
     };
   }
 }

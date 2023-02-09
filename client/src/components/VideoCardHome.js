@@ -44,7 +44,7 @@ function VideoCardHome({ data }) {
         )}
       </div>
       <div className="info px-1 mt-1">
-        <a href={isEdit ? "#" : data.link}>
+        <a href={isEdit ? "#" : `video/${data._id}`}>
           <FlexibleInput
             name="title"
             value={inputData.title}
