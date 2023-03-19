@@ -50,6 +50,9 @@ function Login() {
             Login
           </h3>
         </div>
+        <h3 className="text-center text-[11px] text-slate-700 font-semibold">
+          Demo: username: admin - pw: 123456Abc
+        </h3>
         {showAlert && <Alert alertType={alertType} alertText={alertText} />}
         <p className="text-sm text-gray-400">
           Chức năng nảy chỉ sử dụng cho Quản trị viên

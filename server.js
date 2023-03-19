@@ -36,6 +36,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
   next();
 });
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 // only when ready to deploy
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use("/api/v1/user", userRouter);
